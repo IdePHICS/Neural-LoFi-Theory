@@ -1,0 +1,95 @@
+seed: 0
+device: mps
+root: ./data
+remap_labels: true
+
+dataset:
+  name: cifar10
+  preset: animal_vehicle
+  n_train: 50000
+  n_test: 2000
+
+# Model architecture
+#   Per-layer config: each entry specifies p (random features), k (eigenvectors
+#   kept for projection), and activation.  Convenience variables all_p, all_k,
+#   and activation are interpolated via OmegaConf so you can override them
+#   from the CLI (e.g. --override all_p=8000 all_k=50).
+all_p: 5000
+all_k: 100
+activation: relu
+split: train
+
+layers:
+  - p: ${all_p}
+    k: ${all_k}
+    activation: ${activation}
+  - p: ${all_p}
+    k: ${all_k}
+    activation: ${activation}
+  - p: ${all_p}
+    k: ${all_k}
+    activation: ${activation}
+  - p: ${all_p}
+    k: ${all_k}
+    activation: ${activation}
+  - p: ${all_p}
+    k: ${all_k}
+    activation: ${activation}
+
+# Eigenvector analysis settings:
+#   n_top    – number of top eigenvectors (by |eigenvalue|) saved to
+#              disk for analysis.  No effect on model training.
+#   ga_n_top – number of gradient-ascent maximiser images computed per
+#              layer (expensive).  Must be <= n_top.
+n_top: 20
+ga_n_top: 4
+
+# Gradient-ascent maximiser settings (Fourier parameterization)
+ga_steps: 1000
+ga_lr: 0.05
+ga_fourier_decay: 0.3       # f0: frequency scale for decay mask (lower = smoother)
+ga_fourier_alpha: 2.0        # decay exponent (higher = stronger low-pass)
+ga_n_restarts: 10             # number of random restarts (best is kept)
+ga_normalize_hidden: true    # normalize h at each layer during GA (stabilises deep layers)
+
+output_dir: results/covariance_spectrum_eigenvectors/${dataset.name}
+
+# source .venv/bin/activate
+# python scripts/covariance_spectrum_eigenvectors.py \
+#     --override dataset.name=celeba dataset.preset=male_female dataset.n_train=50000 big_p=2000 layers=3 keep=5 \
+#     --force-run
+
+# python scripts/covariance_spectrum_eigenvectors.py \
+#     --override dataset.name=celeba dataset.preset=male_female \
+#     dataset.n_train=50000 big_p=5000 layers=5 keep=100 \
+#     --force-run
+
+# python scripts/covariance_spectrum_eigenvectors.py \
+#     --override dataset.name=celeba dataset.preset=smiling \
+#     dataset.n_train=50000 big_p=5000 layers=5 keep=100 \
+#     --force-run
+
+# python scripts/covariance_spectrum_eigenvectors.py \
+#     --override dataset.name=celeba dataset.preset=high_cheekbones \
+#     dataset.n_train=50000 big_p=5000 layers=5 keep=100 \
+#     --force-run
+
+
+# ## -----------------------------------
+# source .venv/bin/activate
+
+# PYTHONPATH=scripts/plotting python scripts/plotting/plot_feature_evolution.py \
+#     --n_train 50000 --p 5000 --dataset celeba --save --draft --matrix_type both
+
+# PYTHONPATH=scripts/plotting python scripts/plotting/plot_signed_vs_unsigned.py \
+#     --n_train 50000 --p 5000 --dataset celeba \
+#     --presets male_female smiling high_cheekbones --save --draft
+
+# PYTHONPATH=scripts/plotting python scripts/plotting/plot_spectral_gap.py \
+#     --n_train 50000 --p 5000 --dataset celeba --save --draft --matrix_type both
+
+# PYTHONPATH=scripts/plotting python scripts/plotting/plot_feature_importance.py \
+#     --n_train 50000 --p 5000 --dataset celeba --save --draft --matrix_type both
+
+# PYTHONPATH=scripts/plotting python scripts/plotting/plot_class_projections.py \
+#     --n_train 50000 --p 5000 --dataset celeba --save --draft

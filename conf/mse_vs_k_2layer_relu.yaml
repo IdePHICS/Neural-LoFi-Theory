@@ -1,0 +1,31 @@
+device: cuda
+root: ./data
+remap_labels: true
+activation: relu
+
+dataset:
+  name: cifar10
+  preset: animal_vehicle
+  n_train: 10000
+  n_test: 5000
+
+all_p: 1000
+n_k_points: 50
+seed_start: 0
+seed_end: 9
+
+layers:
+  - p: ${all_p}
+    k: 2
+    activation: ${activation}
+    do_eigenreduction: true
+  - p: ${all_p}
+    k: ${all_p}
+    activation: ${activation}
+    do_eigenreduction: false
+
+ridge_alpha_min: -6
+ridge_alpha_max: 6
+ridge_alpha_num: 100
+
+output_dir: results/mse_vs_k/${dataset.name}/layers_${len:layers}

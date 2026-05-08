@@ -1,0 +1,24 @@
+output_dir: results/plot_cnn_signed_patch_eigenfilters
+
+seed: 0
+device: mps
+root: ./data
+remap_labels: true
+
+split: train
+batch_size: 256
+num_workers: 0
+
+# This script computes 3x3 signed patch covariance per input channel.
+kernel_size: 3
+padding: 1
+stride: 1
+channels_to_use: 3
+n_top: 9
+cmap: RdBu_r
+
+dataset:
+  name: cifar10
+  preset: animal_vehicle
+  n_train: 50000
+  n_test: 5000

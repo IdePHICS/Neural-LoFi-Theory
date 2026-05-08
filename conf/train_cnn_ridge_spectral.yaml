@@ -1,0 +1,55 @@
+# CNN ridge spectral — default config.
+#
+# Single random convolutional layer (P channels) followed by the
+# signed-covariance eigenreduction that keeps the top K eigenvectors,
+# then a ridge readout on the flattened feature map.
+
+seed: 0
+device: mps
+root: ./data
+remap_labels: true
+activation: sigmoid
+
+dataset:
+  name: cifar10
+  preset: animal_vehicle
+  n_train: 50000
+  n_test: 5000
+
+# Shared conv parameters
+kernel_size: 5
+padding: 2
+stride: 1
+
+layers:
+  - p: 500
+    k: 10
+    activation: ${activation}
+    kernel_size: ${kernel_size}
+    padding: ${padding}
+    stride: ${stride}
+    do_eigenreduction: true
+  - p: 500
+    k: 10
+    activation: ${activation}
+    kernel_size: ${kernel_size}
+    padding: ${padding}
+    stride: ${stride}
+    do_eigenreduction: true
+  - kind: flatten
+  - kind: fully_connected
+    p: 200
+    k: 100
+    activation: ${activation}
+    do_eigenreduction: true
+    
+
+ridge_alpha_min: -6
+ridge_alpha_max: 6
+ridge_alpha_num: 500
+
+covariance_chunk_size: 256
+
+num_workers: 0
+
+output_dir: results/train_cnn_ridge_spectral/${dataset.name}/layers_${len:layers}

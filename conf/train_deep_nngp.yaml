@@ -1,0 +1,56 @@
+seed: 0
+device: cpu
+root: ./data
+remap_labels: true
+
+dataset:
+  name: cifar10
+  preset: animal_vehicle
+  n_train: 1000
+  n_test: 5000
+
+# Deep NNGP = kernel-spectral with ``do_eigenreduction: false`` on every
+# layer.  The schema mirrors ``conf/train_kernel_spectral.yaml`` (a
+# ``layers:`` list); to change depth, add / remove entries.  The
+# ``n_layers`` flat field from earlier versions is gone — layer count
+# comes from the list length.
+
+layers:
+  - kernel: sigmoid
+    m: 0                     # unused when do_eigenreduction=false
+    sigma_w: 1.0
+    sigma_b: 0.0
+    n_quad: 20
+    do_eigenreduction: false
+  - kernel: sigmoid
+    m: 0
+    sigma_w: 1.0
+    sigma_b: 0.0
+    n_quad: 20
+    do_eigenreduction: false
+  - kernel: sigmoid
+    m: 0
+    sigma_w: 1.0
+    sigma_b: 0.0
+    n_quad: 20
+    do_eigenreduction: false
+
+# Memory budget for the kernel's streamed quadrature path (bytes).
+# ``null`` keeps the kernel's own default (1 GiB); override via
+# ``--override memory_budget_bytes=17179869184`` (16 GiB) on cluster
+# nodes with more RAM.
+memory_budget_bytes: null
+
+# Row-chunk for the deep-NNGP composition step.  ``null`` auto-picks a
+# chunk sized to ``memory_budget_bytes``.
+row_chunk: null
+
+# Numerical floor for G's eigenvalues in the (unused here) eigen
+# reduction path — kept for parity with train_kernel_spectral.yaml.
+eps: 1.0e-6
+
+ridge_alpha_min: -6
+ridge_alpha_max: 6
+ridge_alpha_num: 500
+
+output_dir: results/train_deep_nngp/${dataset.name}/layers_${len:layers}

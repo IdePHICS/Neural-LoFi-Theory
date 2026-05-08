@@ -1,0 +1,105 @@
+# -----------------------------
+# neurips_paper.mplstyle
+# Publication-ready style for NeurIPS-style figures
+# -----------------------------
+
+# --- Use LaTeX for text rendering ---
+text.usetex: True
+text.latex.preamble: \usepackage{amsmath}\usepackage{amssymb}\usepackage{siunitx}\usepackage{bm}
+
+# --- Fonts ---
+font.family: serif
+font.serif: Computer Modern Roman, cmr10, DejaVu Serif
+font.size: 9
+axes.titlesize: 9
+axes.labelsize: 9
+xtick.labelsize: 8
+ytick.labelsize: 8
+legend.fontsize: 8
+figure.titlesize: 10
+
+# --- Figure size / resolution ---
+figure.figsize: 3.25, 2.2
+figure.dpi: 150
+savefig.dpi: 300
+savefig.format: pdf
+savefig.bbox: tight
+savefig.pad_inches: 0.02
+
+# --- Lines / markers ---
+lines.linewidth: 1.8
+lines.markersize: 4.5
+lines.markeredgewidth: 0.8
+patch.linewidth: 1.0
+
+# --- Axes ---
+axes.linewidth: 0.8
+axes.labelpad: 2.5
+axes.titlepad: 4.0
+axes.spines.top: True
+axes.spines.right: True
+axes.axisbelow: True
+
+# --- Ticks ---
+xtick.direction: in
+ytick.direction: in
+xtick.major.size: 3.5
+xtick.minor.size: 2.0
+ytick.major.size: 3.5
+ytick.minor.size: 2.0
+xtick.major.width: 0.8
+ytick.major.width: 0.8
+xtick.minor.width: 0.6
+ytick.minor.width: 0.6
+xtick.major.pad: 2
+ytick.major.pad: 2
+xtick.minor.visible: False
+ytick.minor.visible: False
+
+# --- Grid ---
+grid.color: 0.85
+grid.linestyle: -
+grid.linewidth: 0.5
+grid.alpha: 0.7
+
+# --- Legend ---
+legend.frameon: True
+legend.framealpha: 0.9
+legend.edgecolor: 0.7
+legend.fancybox: False
+legend.borderaxespad: 0.3
+legend.borderpad: 0.2
+legend.handlelength: 1.4
+legend.handletextpad: 0.4
+legend.columnspacing: 0.8
+legend.labelspacing: 0.25
+
+# --- Error bars / caps ---
+errorbar.capsize: 2.5
+
+# --- Histogram / scatter aesthetics ---
+hist.bins: 30
+scatter.marker: o
+
+# Color cycle: using matplotlib defaults
+
+# --- Image / colormap ---
+image.cmap: cividis
+image.interpolation: nearest
+
+# --- Math / vector font embedding ---
+axes.formatter.use_mathtext: True
+mathtext.fontset: cm
+pdf.fonttype: 42
+ps.fonttype: 42
+
+# --- Boxplot ---
+boxplot.patchartist: True
+boxplot.showfliers: False
+boxplot.boxprops.linewidth: 1.0
+boxplot.whiskerprops.linewidth: 1.0
+boxplot.capprops.linewidth: 1.0
+boxplot.medianprops.linewidth: 1.2
+
+# --- Constrained layout is usually safer for papers ---
+figure.constrained_layout.use: True

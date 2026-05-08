@@ -1,0 +1,12 @@
+# Extra dependencies for running experiment scripts.
+# The train-hierarchically package and its dependencies are assumed
+# to be installed already (pip install -e .).
+
+# --- Required by all scripts ---
+omegaconf>=2.3
+pyyaml>=6.0
+matplotlib>=3.6
+pandas>=1.5
+
+# --- Optional ---
+# mpi4py>=3.1        # only needed for parallel_run.py / MPI-based scripts

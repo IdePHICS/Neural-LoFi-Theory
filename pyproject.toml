@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "train-hierarchically"
+version = "0.1.0"
+description = "A modular, extensible machine learning toolkit"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Matteo Vilucchio"},
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0",
+    "torchvision>=0.15",
+    "numpy>=1.23",
+    "scipy>=1.10",
+    "scikit-learn>=1.2",
+    "kymatio>=0.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1",
+    "mypy>=1.0",
+]
+scattering = [
+    "kymatio>=0.3",  # kept for backward compat: `pip install .[scattering]`
+]
+
+[project.urls]
+Homepage = "https://github.com/matteovilucchio/predicting-real-data"
+Repository = "https://github.com/matteovilucchio/predicting-real-data"
+Issues = "https://github.com/matteovilucchio/predicting-real-data/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+# Allow uppercase single-letter math variable names (X, H, W, C, N, D)
+# and the conventional F alias for torch.nn.functional — standard in ML code.
+ignore = ["N803", "N806", "N812"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true

@@ -1,0 +1,31 @@
+seed: 0
+device: cpu
+root: ./data
+remap_labels: true
+activation: sigmoid
+
+dataset:
+  name: cifar10
+  preset: animal_vehicle
+  n_train: 50000
+  n_test: 5000
+
+all_p: 8000
+
+layers:
+  - p: ${all_p}
+    k: 25
+    activation: ${activation}
+    do_eigenreduction: true
+  - p: ${all_p}
+    k: 25
+    activation: ${activation}
+    do_eigenreduction: true
+
+ridge_alpha_min: -6
+ridge_alpha_max: 6
+ridge_alpha_num: 500
+
+num_workers: 0
+
+output_dir: results/train_ridge_spectral/${dataset.name}/layers_${len:layers}

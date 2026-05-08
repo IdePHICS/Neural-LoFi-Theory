@@ -1,0 +1,44 @@
+seed: 0
+device: cuda
+root: ./data
+remap_labels: true
+
+dataset:
+  name: celeba
+  preset: eyeglasses
+  n_train: 10000
+  n_test: 2000
+
+split: train
+
+# 5-layer architecture with decreasing K, P=50000
+layers:
+  - p: 50000
+    k: 100
+    activation: relu
+  - p: 50000
+    k: 80
+    activation: relu
+  - p: 50000
+    k: 50
+    activation: relu
+  - p: 50000
+    k: 30
+    activation: relu
+  - p: 50000
+    k: 20
+    activation: relu
+
+# Eigenvector analysis settings
+n_top: 20
+ga_n_top: 4
+
+# Gradient-ascent maximiser settings (Fourier parameterization)
+ga_steps: 2000
+ga_lr: 0.05
+ga_fourier_decay: 0.15
+ga_fourier_alpha: 3.0
+ga_n_restarts: 15
+ga_normalize_hidden: true
+
+output_dir: results/covariance_spectrum_eigenvectors/${dataset.name}

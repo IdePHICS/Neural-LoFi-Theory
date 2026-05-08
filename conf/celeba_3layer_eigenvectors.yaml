@@ -1,0 +1,39 @@
+seed: 0
+device: cuda
+root: ./data
+remap_labels: true
+
+dataset:
+  name: celeba
+  preset: high_cheekbones
+  n_train: 15000
+  n_test: 2000
+
+split: train
+
+# 3-layer architecture with decreasing K, P=10000 (close to D=12288)
+# Best architecture from parameter search: K=100->50->20
+layers:
+  - p: 10000
+    k: 100
+    activation: relu
+  - p: 10000
+    k: 50
+    activation: relu
+  - p: 10000
+    k: 20
+    activation: relu
+
+# Eigenvector analysis settings
+n_top: 20
+ga_n_top: 4
+
+# Gradient-ascent maximiser settings (Fourier parameterization)
+ga_steps: 2000
+ga_lr: 0.05
+ga_fourier_decay: 0.15
+ga_fourier_alpha: 3.0
+ga_n_restarts: 15
+ga_normalize_hidden: true
+
+output_dir: results/covariance_spectrum_eigenvectors/${dataset.name}
